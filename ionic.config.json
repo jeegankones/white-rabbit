@@ -1,0 +1,7 @@
+{
+  "name": "white-rabbit",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
