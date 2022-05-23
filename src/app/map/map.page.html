@@ -1,0 +1,23 @@
+<ion-content [fullscreen]="true">
+  <ion-popover [isOpen]="popOverVisible">
+    <ng-template>
+      <ion-content>Popover Content</ion-content>
+    </ng-template>
+  </ion-popover>
+
+  <google-map height="100%"
+              width="100%"
+              [center]="{lat: 44.9695, lng: -93.276}"
+              [zoom]="13"
+              [options]="{disableDefaultUI: true, mapId: '556dce10fd536353'}">
+    <map-marker *ngFor="let point of mapPoints"
+                [id]="point.id"
+                [position]="point.location"
+                [options]="{icon: svgMarker}"
+                (mapClick)="openLocation($event, point)">
+    </map-marker>
+    <map-heatmap-layer [data]="mapPoints"
+                       [options]="{radius: 25, maxIntensity: 100}">
+    </map-heatmap-layer>
+  </google-map>
+</ion-content>
