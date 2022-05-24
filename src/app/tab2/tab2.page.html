@@ -15,11 +15,10 @@
 
 
   <ion-list lines="full">
-    <ion-item *ngFor="let item of pageItems" routerLink="/tab1">
-      <ion-icon name="pin" slot="start"></ion-icon>
+    <ion-item *ngFor="let item of pageItems" routerLink="/map">
       <ion-label>
-        <h2>Some thing happened</h2>
-        <p>851 North Atlantic Dr.</p>
+        <h2>{{item.label}}</h2>
+        <p>{{item.location}}</p>
       </ion-label>
       <ion-note slot="end">1 minute ago</ion-note>
     </ion-item>

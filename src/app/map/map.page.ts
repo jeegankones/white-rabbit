@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MapService } from './map.service';
 
 @Component({
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss']
 })
-export class MapPage {
+export class MapPage implements OnInit {
   readonly svgMarker: google.maps.Symbol = {
     path: google.maps.SymbolPath.CIRCLE,
     fillColor: 'white',
@@ -15,14 +16,20 @@ export class MapPage {
   };
 
   popOverVisible = false;
+  mapPoints;
 
-  mapPoints = [
-    {id: 1, location: new google.maps.LatLng(44.95, -93.29), weight: 100},
-    {id: 2, location: new google.maps.LatLng(44.963, -93.292), weight: 80},
-    {id: 3, location: new google.maps.LatLng(44.97, -93.27), weight: 10},
-  ];
+  constructor(private mapService: MapService) {
+  }
 
-  constructor() {
+  ngOnInit() {
+    this.mapService.getMapData().subscribe(data => {
+        this.mapPoints = data.map(location => ({
+            id: location.id,
+            location: new google.maps.LatLng(location.latitude, location.longitude),
+            weight: (location.connectedUsers + 1) * 10,
+          }));
+      }
+    );
   }
 
   openLocation($event, location): void {

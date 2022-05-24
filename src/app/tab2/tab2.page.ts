@@ -11,27 +11,35 @@ export class Tab2Page {
   readonly pageItems = [
     {
       label: 'Someone just posted an event',
+      location: '123 North Atlantic Dr.',
     },
     {
       label: 'Someone joined a room you follow',
+      location: '123 North Atlantic Dr.',
     },
     {
       label: 'Your friend just arrived at a room you follow',
+      location: '123 North Atlantic Dr.',
     },
     {
       label: 'Someone just posted an event',
+      location: '123 North Atlantic Dr.',
     },
     {
       label: 'Someone just posted an event',
+      location: '123 North Atlantic Dr.',
     },
     {
       label: 'Someone just posted an event',
+      location: '123 North Atlantic Dr.',
     },
     {
       label: 'Someone just posted an event',
+      location: '123 North Atlantic Dr.',
     },
     {
       label: 'Someone just posted an event',
+      location: '123 North Atlantic Dr.',
     },
   ];
 
