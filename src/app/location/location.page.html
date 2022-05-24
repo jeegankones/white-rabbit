@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Location {{id}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section class="location__heading ion-padding">
+    <h2 class="ion-no-margin">123 North Rodeo Drive</h2>
+    <ion-button (click)="isFavorited = !isFavorited" color="light">
+      <ion-icon *ngIf="!isFavorited" slot="icon-only" name="star-outline"></ion-icon>
+      <ion-icon *ngIf="isFavorited" slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </section>
+  <section class="location__body ion-padding-horizontal">
+    <code>Connected users: 8</code>
+  </section>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="ion-text-center">
+    <ion-button>
+      Chat
+      <ion-icon slot="end" name="chatbox"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from './map.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -18,7 +19,7 @@ export class MapPage implements OnInit {
   popOverVisible = false;
   mapPoints;
 
-  constructor(private mapService: MapService) {
+  constructor(private mapService: MapService, private router: Router) {
   }
 
   ngOnInit() {
@@ -32,8 +33,8 @@ export class MapPage implements OnInit {
     );
   }
 
-  openLocation($event, location): void {
-
+  openLocation(location): void {
+    this.router.navigate(['map', 'location', location.id]);
   }
 
 }

@@ -12,6 +12,10 @@ const routes: Routes = [
         loadChildren: () => import('../map/map.module').then(m => m.MapPageModule)
       },
       {
+        path: 'map/location/:id',
+        loadChildren: () => import('../location/location.module').then( m => m.LocationPageModule)
+      },
+      {
         path: 'tab2',
         loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
       },

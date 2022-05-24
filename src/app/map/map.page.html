@@ -14,7 +14,7 @@
                 [id]="point.id"
                 [position]="point.location"
                 [options]="{icon: svgMarker}"
-                (mapClick)="openLocation($event, point)">
+                (mapClick)="openLocation(point)">
     </map-marker>
     <map-heatmap-layer [data]="mapPoints"
                        [options]="{radius: 25, maxIntensity: 100}">
