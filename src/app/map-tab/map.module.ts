@@ -6,6 +6,7 @@ import { MapPage } from './map.page';
 
 import { MapPageRoutingModule } from './map-routing.module';
 import {GoogleMapsModule} from '@angular/google-maps';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import {GoogleMapsModule} from '@angular/google-maps';
     GoogleMapsModule,
     MapPageRoutingModule
   ],
-  declarations: [MapPage]
+  declarations: [MapPage, MapComponent]
 })
 export class MapPageModule {}
