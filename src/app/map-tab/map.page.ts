@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'wr-map-page',
@@ -16,7 +17,7 @@ export class MapPage implements OnInit {
 
   ngOnInit() {
     // eslint-disable-next-line max-len
-    this.apiLoaded = this.httpClient.jsonp(`https://maps.googleapis.com/maps/api/js?key=AIzaSyCEFNQEy-pRnQSZ3jHhrzi2c-h6UlISKnY&libraries=visualization`, 'callback')
+    this.apiLoaded = this.httpClient.jsonp(`https://maps.googleapis.com/maps/api/js?key=${environment.ANGULAR_GOOGLE_MAPS_API_KEY}&libraries=visualization`, 'callback')
       .pipe(
         map(() => true),
         catchError(() => of(false)),
