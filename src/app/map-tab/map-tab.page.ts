@@ -6,10 +6,10 @@ import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'wr-map-page',
-  templateUrl: 'map.page.html',
-  styleUrls: ['map.page.scss']
+  templateUrl: 'map-tab.page.html',
+  styleUrls: ['map-tab.page.scss']
 })
-export class MapPage implements OnInit {
+export class MapTabPage implements OnInit {
   apiLoaded: Observable<boolean>;
 
   constructor(private httpClient: HttpClient) {

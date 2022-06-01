@@ -2,10 +2,10 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MapPage } from './map.page';
+import { MapTabPage } from './map-tab.page';
 
-import { MapPageRoutingModule } from './map-routing.module';
-import {GoogleMapsModule} from '@angular/google-maps';
+import { MapTabPageRoutingModule } from './map-tab-routing.module';
+import { GoogleMapsModule } from '@angular/google-maps';
 import { MapComponent } from './map/map.component';
 
 @NgModule({
@@ -14,8 +14,8 @@ import { MapComponent } from './map/map.component';
     CommonModule,
     FormsModule,
     GoogleMapsModule,
-    MapPageRoutingModule
+    MapTabPageRoutingModule
   ],
-  declarations: [MapPage, MapComponent]
+  declarations: [MapTabPage, MapComponent]
 })
-export class MapPageModule {}
+export class MapTabPageModule {}

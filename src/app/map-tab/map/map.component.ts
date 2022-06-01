@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MapService } from '../map.service';
+import { MapTabService } from '../map-tab.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,7 +17,7 @@ export class MapComponent implements OnInit {
   };
   mapPoints;
 
-  constructor(private mapService: MapService, private router: Router) { }
+  constructor(private mapService: MapTabService, private router: Router) { }
 
   ngOnInit() {
     this.mapService.getMapData().subscribe(data => {
