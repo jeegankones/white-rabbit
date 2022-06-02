@@ -13,7 +13,7 @@ const routes: Routes = [
       },
       {
         path: 'map/location/:id',
-        loadChildren: () => import('../location/location.module').then( m => m.LocationPageModule)
+        loadChildren: () => import('../location/location.module').then(m => m.LocationPageModule)
       },
       {
         path: 'tab2',
