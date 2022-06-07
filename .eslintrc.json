@@ -35,6 +35,13 @@
             "prefix": "wr",
             "style": "camelCase"
           }
+        ],
+        "no-trailing-spaces": [
+          "error",
+          {
+            "skipBlankLines": true,
+            "ignoreComments": true
+          }
         ]
       }
     },

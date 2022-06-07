@@ -1,9 +1,42 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="login ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h1 class="login__heading">White Rabbit</h1>
 
-<ion-content>
+        <!-- Form -->
+        <form [formGroup]="credentialForm"
+              (ngSubmit)="signIn()">
+          <div class="ion-margin-bottom">
+            <ion-item>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input
+                formControlName="email"
+                [autofocus]="true">
+              </ion-input>
+            </ion-item>
+            <small *ngIf="(email.dirty || email.touched) && email.errors">
+              <span *ngIf="email.errors?.required">Email is required</span>
+              <span *ngIf="email.errors?.email">Email is invalid</span>
+            </small>
+          </div>
 
+          <div class="ion-margin-bottom">
+            <ion-item>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input
+                type="password"
+                formControlName="password">
+              </ion-input>
+            </ion-item>
+            <small *ngIf="(password.dirty || password.touched) && password.errors">
+              <span *ngIf="password.errors?.required">Password is required</span>
+            </small>
+          </div>
+
+          <ion-button type="submit" expand="block" [disabled]="!credentialForm.valid">Sign in</ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

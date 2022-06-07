@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '../../shared/interfaces/location';
 
 @Component({
-  selector: 'app-location',
+  selector: 'wr-location',
   templateUrl: './location.page.html',
   styleUrls: ['./location.page.scss'],
 })
 export class LocationPage implements OnInit {
 
-  id: string;
+  location: Location;
   isFavorited = false;
 
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.id = params.get('id');
+    this.activatedRoute.data.subscribe(data => {
+      this.location = data.location;
     });
   }
 

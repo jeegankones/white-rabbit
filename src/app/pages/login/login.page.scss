@@ -1,0 +1,15 @@
+.login {
+  &__heading {
+    margin-bottom: 3rem;
+  }
+}
+
+ion-grid {
+  ion-row {
+    justify-content: center;
+  }
+
+  ion-col {
+    max-width: 50em;
+  }
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MapTabService } from '../map-tab.service';
+import { LocationService } from '../../../services/location.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,21 +13,20 @@ export class MapComponent implements OnInit {
     fillColor: 'white',
     fillOpacity: 0,
     strokeWeight: 0,
-    scale: 25,
+    scale: 30,
   };
   mapPoints;
 
-  constructor(private mapService: MapTabService, private router: Router) { }
+  constructor(private mapService: LocationService, private router: Router) { }
 
   ngOnInit() {
-    this.mapService.getMapData().subscribe(data => {
-        this.mapPoints = data.map(location => ({
-          id: location.id,
-          location: new google.maps.LatLng(location.latitude, location.longitude),
-          weight: (location.connectedUsers + 1) * 10,
-        }));
-      }
-    );
+    this.mapService.getLocationCollection().subscribe((locations) => {
+      this.mapPoints = locations.map(location => ({
+        id: location.id,
+        location: new google.maps.LatLng(location.coordinates.latitude, location.coordinates.longitude),
+        weight: (location.connectedUsers + 1) * 10,
+      }));
+    });
   }
 
   openLocation(location): void {
