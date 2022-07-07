@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { canActivate, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
+import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/compat/auth-guard';
+
+export const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
+const redirectLoggedInToRoot = () => redirectLoggedInTo(['/']);
 
 const routes: Routes = [
   {
@@ -10,7 +13,12 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
-    ...canActivate(() => redirectLoggedInTo(['/']))
+    ...canActivate(redirectLoggedInToRoot)
+  },
+  {
+    path: 'onboarding',
+    loadChildren: () => import('./pages/onboarding/onboarding.module').then( m => m.OnboardingPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
   }
 ];
 @NgModule({
