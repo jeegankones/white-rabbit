@@ -1,9 +1,92 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>onboarding</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding">
+  <swiper #swiper
+          [config]="config"
+          (slideChangeTransitionStart)="swiperAnimating = true"
+          (slideChangeTransitionEnd)="swiperAnimating = false">
 
-<ion-content>
+    <!-- Slide 1 -->
+    <ng-template swiperSlide>
+      <div class="onboarding-slide">
+        <h1 class="mt-0">First let's verify your email</h1>
+        <p class="mb-5">*Check your spam</p>
+        <ion-button class="mb-3"
+                    color="light"
+                    [disabled]="verificationButtonDisabled"
+                    expand="block"
+                    (click)="sendVerificationEmail()">
+          Send verification email
+        </ion-button>
+        <ion-button expand="block"
+                    [disabled]="continueButtonDisabled || swiperAnimating"
+                    (click)="verifyEmail()">
+          Continue
+        </ion-button>
+      </div>
+    </ng-template>
 
+    <!-- Slide 2 -->
+    <ng-template swiperSlide>
+      <div class="onboarding-slide">
+        <h1 class="mt-0 mb-5">Choose a new password</h1>
+
+        <!-- Password form -->
+        <form [formGroup]="passwordForm" (ngSubmit)="setNewPassword()">
+          <div class="mb-1 ion-text-left">
+            <ion-item>
+              <ion-label position="floating">New password</ion-label>
+              <ion-input formControlName="password"
+                         [autofocus]="true"
+                         type="password">
+              </ion-input>
+            </ion-item>
+            <small *ngIf="(password.dirty || password.touched) && password.errors">
+              <p *ngIf="password.errors?.required">Password is required</p>
+              <p *ngIf="password.errors?.minlength">Password must be at least 6 characters</p>
+            </small>
+          </div>
+
+          <div class="mb-3 ion-text-left">
+            <ion-item>
+              <ion-label position="floating">Confirm password</ion-label>
+              <ion-input formControlName="confirm"
+                         type="password">
+              </ion-input>
+            </ion-item>
+            <small *ngIf="(confirm.dirty || confirm.touched) && confirm.errors">
+              <p *ngIf="confirm.errors?.notSame">Passwords must match</p>
+            </small>
+          </div>
+
+          <ion-button expand="block" [disabled]="passwordForm.invalid || continueButtonDisabled || swiperAnimating" type="submit">
+            Continue
+          </ion-button>
+        </form>
+      </div>
+    </ng-template>
+
+    <!-- Slide 3 -->
+    <ng-template swiperSlide>
+      <div class="onboarding-slide">
+        <h1 class="mt-0">Choose your screen name</h1>
+        <p class="mb-5">*This is how you will appear to others</p>
+
+        <form [formGroup]="usernameForm" (ngSubmit)="setUsername()">
+          <div class="mb-3 ion-text-left">
+            <ion-item>
+              <ion-label position="floating">Screen name</ion-label>
+              <ion-input formControlName="username">
+              </ion-input>
+            </ion-item>
+            <small *ngIf="(username.dirty || username.touched) && username.errors">
+              <p *ngIf="username.errors?.required">Screen name is required</p>
+            </small>
+          </div>
+
+          <ion-button expand="block" [disabled]="usernameForm.invalid || continueButtonDisabled || swiperAnimating" type="submit">
+            Continue
+          </ion-button>
+        </form>
+      </div>
+    </ng-template>
+  </swiper>
 </ion-content>

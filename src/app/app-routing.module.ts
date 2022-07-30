@@ -7,7 +7,7 @@ const redirectLoggedInToRoot = () => redirectLoggedInTo(['/']);
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'tab',
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
   },
   {
@@ -18,7 +18,16 @@ const routes: Routes = [
   {
     path: 'onboarding',
     loadChildren: () => import('./pages/onboarding/onboarding.module').then( m => m.OnboardingPageModule),
-    ...canActivate(redirectUnauthorizedToLogin)
+  },
+  {
+    path: '',
+    redirectTo: '/tab/map',
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: '/tab/map',
+    pathMatch: 'full'
   }
 ];
 @NgModule({

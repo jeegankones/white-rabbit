@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -12,6 +12,8 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { IonicStorageModule } from '@ionic/storage-angular';
+import { GlobalErrorHandler } from './shared/error/error-handler';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +21,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     HttpClientJsonpModule,
@@ -42,6 +45,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler}
   ],
   bootstrap: [AppComponent],
 })

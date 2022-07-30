@@ -1,13 +1,14 @@
 <ion-content [fullscreen]="true" class="login ion-padding">
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <h1 class="login__heading">White Rabbit</h1>
+  <form [formGroup]="credentialForm"
+        (keydown.enter)="enterKeyPress()"
+        (ngSubmit)="signIn()">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h1 class="mt-0 mb-5 ion-text-center">White Rabbit</h1>
 
-        <!-- Form -->
-        <form [formGroup]="credentialForm"
-              (ngSubmit)="signIn()">
-          <div class="ion-margin-bottom">
+          <!-- Form -->
+          <div class="mb-1">
             <ion-item>
               <ion-label position="floating">Email</ion-label>
               <ion-input
@@ -16,12 +17,12 @@
               </ion-input>
             </ion-item>
             <small *ngIf="(email.dirty || email.touched) && email.errors">
-              <span *ngIf="email.errors?.required">Email is required</span>
-              <span *ngIf="email.errors?.email">Email is invalid</span>
+              <p *ngIf="email.errors?.required">Email is required</p>
+              <p *ngIf="email.errors?.email">Email is invalid</p>
             </small>
           </div>
 
-          <div class="ion-margin-bottom">
+          <div class="mb-3">
             <ion-item>
               <ion-label position="floating">Password</ion-label>
               <ion-input
@@ -30,13 +31,13 @@
               </ion-input>
             </ion-item>
             <small *ngIf="(password.dirty || password.touched) && password.errors">
-              <span *ngIf="password.errors?.required">Password is required</span>
+              <p *ngIf="password.errors?.required">Password is required</p>
             </small>
           </div>
 
           <ion-button type="submit" expand="block" [disabled]="!credentialForm.valid">Sign in</ion-button>
-        </form>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>

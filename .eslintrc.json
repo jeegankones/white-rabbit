@@ -42,7 +42,9 @@
             "skipBlankLines": true,
             "ignoreComments": true
           }
-        ]
+        ],
+        "max-len": "off",
+        "no-underscore-dangle": "off"
       }
     },
     {

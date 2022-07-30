@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { AuthService } from '../../../services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'wr-tab3',
@@ -11,30 +10,10 @@ import { Router } from '@angular/router';
 export class Tab3Page {
 
   constructor(private loadingController: LoadingController,
-              private authService: AuthService,
-              private router: Router,
-              private alertController: AlertController) {}
+              private authService: AuthService) {}
 
-  async signOut() {
-    const loading = await this.loadingController.create();
-    await loading.present();
-
-    this.authService.signOut().then(
-      (res) => {
-        loading.dismiss();
-        this.router.navigateByUrl('/login');
-      },
-      async (err) => {
-        loading.dismiss();
-        const alert = await this.alertController.create({
-          header: ':(',
-          message: err.message,
-          buttons: ['OK'],
-        });
-
-        await alert.present();
-      }
-    );
+  signOut() {
+    this.authService.signOut();
   }
 
 }

@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class OnboardingGuard implements CanActivate, CanActivateChild {
+export class AccessGuard implements CanActivate, CanActivateChild {
   constructor(private authService: AuthService, private router: Router) {
   }
 
@@ -27,9 +27,15 @@ export class OnboardingGuard implements CanActivate, CanActivateChild {
   }
 
   checkOnboardingStatus(): Observable<boolean | UrlTree> | boolean | UrlTree {
-    return this.authService.getCurrentUserData()
-      .pipe(
-        map((user) => user?.completedOnboarding ? this.router.parseUrl('/') : true)
-      );
+    if (!this.authService.currentUser) {
+      return this.authService.getCurrentUserData()
+        .pipe(
+          map((user) => user?.completedOnboarding ? true : this.router.parseUrl('/onboarding'))
+        );
+    }
+    if (this.authService.currentUser?.completedOnboarding) {
+      return true;
+    }
+    return this.router.parseUrl('/onboarding');
   }
 }

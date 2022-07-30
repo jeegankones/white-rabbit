@@ -1,9 +1,3 @@
-.login {
-  &__heading {
-    margin-bottom: 3rem;
-  }
-}
-
 ion-grid {
   ion-row {
     justify-content: center;
@@ -12,4 +6,11 @@ ion-grid {
   ion-col {
     max-width: 50em;
   }
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }

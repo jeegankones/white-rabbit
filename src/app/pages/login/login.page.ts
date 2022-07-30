@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'wr-login',
@@ -19,7 +18,6 @@ export class LoginPage implements OnInit {
     private alertController: AlertController,
     private loadingController: LoadingController,
     private authService: AuthService,
-    private afStore: AngularFirestore,
   ) {}
 
   // Easy access for form fields
@@ -39,27 +37,18 @@ export class LoginPage implements OnInit {
   }
 
   async signIn() {
-    const loading = await this.loadingController.create();
-    await loading.present();
+    const success = await this.authService.signIn(this.credentialForm.value);
+    if (!success) {
+      this.credentialForm.reset();
+    }
+  }
 
-    this.authService
-      .signIn(this.credentialForm.value)
-      .then(
-        (res) => {
-          loading.dismiss();
-          this.router.navigateByUrl('/', { replaceUrl: true });
-        },
-        async (err) => {
-          loading.dismiss();
-          const alert = await this.alertController.create({
-            header: ':(',
-            message: err.message,
-            buttons: ['OK'],
-          });
-
-          await alert.present();
-        }
-      );
+  enterKeyPress() {
+    if (this.credentialForm.valid) {
+      this.signIn();
+    } else {
+      this.credentialForm.markAllAsTouched();
+    }
   }
 
 }
