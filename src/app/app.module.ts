@@ -12,7 +12,6 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { IonicStorageModule } from '@ionic/storage-angular';
 import { GlobalErrorHandler } from './shared/error/error-handler';
 
 @NgModule({
@@ -21,7 +20,6 @@ import { GlobalErrorHandler } from './shared/error/error-handler';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     HttpClientJsonpModule,

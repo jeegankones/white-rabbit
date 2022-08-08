@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
   }
 
   openLocation(location): void {
-    this.router.navigate(['map', 'location', location.id]);
+    this.router.navigate(['tab', 'map', 'location', location.id]);
   }
 
 }

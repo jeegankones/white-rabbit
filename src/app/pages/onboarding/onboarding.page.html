@@ -1,11 +1,12 @@
 <ion-content class="ion-padding">
-  <swiper #swiper
-          [config]="config"
-          (slideChangeTransitionStart)="swiperAnimating = true"
-          (slideChangeTransitionEnd)="swiperAnimating = false">
+  <ion-slides #slides
+              [pager]="true"
+              [options]="config"
+              (ionSlideNextStart)="swiperAnimating = true"
+              (ionSlideNextEnd)="swiperAnimating = false">
 
     <!-- Slide 1 -->
-    <ng-template swiperSlide>
+    <ion-slide>
       <div class="onboarding-slide">
         <h1 class="mt-0">First let's verify your email</h1>
         <p class="mb-5">*Check your spam</p>
@@ -22,10 +23,10 @@
           Continue
         </ion-button>
       </div>
-    </ng-template>
+    </ion-slide>
 
     <!-- Slide 2 -->
-    <ng-template swiperSlide>
+    <ion-slide>
       <div class="onboarding-slide">
         <h1 class="mt-0 mb-5">Choose a new password</h1>
 
@@ -35,7 +36,6 @@
             <ion-item>
               <ion-label position="floating">New password</ion-label>
               <ion-input formControlName="password"
-                         [autofocus]="true"
                          type="password">
               </ion-input>
             </ion-item>
@@ -62,17 +62,53 @@
           </ion-button>
         </form>
       </div>
-    </ng-template>
+    </ion-slide>
 
     <!-- Slide 3 -->
-    <ng-template swiperSlide>
+    <ion-slide>
+      <div class="onboarding-slide">
+        <h1 class="mt-0">Enter your first and last name</h1>
+        <p class="mb-5">*These are kept private</p>
+
+        <form [formGroup]="firstLastNameForm" (ngSubmit)="setFirstLast()">
+          <div class="mb-1 ion-text-left">
+            <ion-item class="ion-no-padding">
+              <ion-label position="floating">First name</ion-label>
+              <ion-input formControlName="firstName">
+              </ion-input>
+            </ion-item>
+            <small *ngIf="(firstName.dirty || firstName.touched) && firstName.errors">
+              <p *ngIf="firstName.errors?.required">First name is required</p>
+            </small>
+          </div>
+
+          <div class="mb-3 ion-text-left">
+            <ion-item class="ion-no-padding">
+              <ion-label position="floating">Last name</ion-label>
+              <ion-input formControlName="lastName">
+              </ion-input>
+            </ion-item>
+            <small *ngIf="(lastName.dirty || lastName.touched) && lastName.errors">
+              <p *ngIf="lastName.errors?.required">Last name is required</p>
+            </small>
+          </div>
+
+          <ion-button expand="block" [disabled]="firstLastNameForm.invalid || continueButtonDisabled || swiperAnimating" type="submit">
+            Continue
+          </ion-button>
+        </form>
+      </div>
+    </ion-slide>
+
+    <!-- Slide 4 -->
+    <ion-slide>
       <div class="onboarding-slide">
         <h1 class="mt-0">Choose your screen name</h1>
         <p class="mb-5">*This is how you will appear to others</p>
 
         <form [formGroup]="usernameForm" (ngSubmit)="setUsername()">
           <div class="mb-3 ion-text-left">
-            <ion-item>
+            <ion-item class="ion-no-padding">
               <ion-label position="floating">Screen name</ion-label>
               <ion-input formControlName="username">
               </ion-input>
@@ -87,6 +123,6 @@
           </ion-button>
         </form>
       </div>
-    </ng-template>
-  </swiper>
+    </ion-slide>
+  </ion-slides>
 </ion-content>

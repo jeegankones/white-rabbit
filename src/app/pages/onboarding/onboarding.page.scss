@@ -1,5 +1,10 @@
-.swiper {
+ion-slides {
   height: 100%;
+  --bullet-background: var(--ion-color-primary);
+}
+
+ion-item {
+  --padding-start: 0;
 }
 
 .onboarding-slide {

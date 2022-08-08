@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { OnboardingPageRoutingModule } from './onboarding-routing.module';
 
 import { OnboardingPage } from './onboarding.page';
-import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   imports: [
@@ -15,7 +14,6 @@ import { SwiperModule } from 'swiper/angular';
     FormsModule,
     IonicModule,
     OnboardingPageRoutingModule,
-    SwiperModule,
     ReactiveFormsModule,
   ],
   declarations: [OnboardingPage]

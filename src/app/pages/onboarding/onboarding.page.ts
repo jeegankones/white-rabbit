@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import SwiperCore, { Pagination, SwiperOptions } from 'swiper';
-import { SwiperComponent } from 'swiper/angular';
 import { AuthService } from '../../services/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AlertController } from '@ionic/angular';
 import { FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-
-SwiperCore.use([Pagination]);
+import { AUTH_ERROR_CODES_MAP } from '../../shared/auth-error-codes';
 
 @Component({
   selector: 'wr-onboarding',
@@ -16,16 +13,19 @@ SwiperCore.use([Pagination]);
   styleUrls: ['./onboarding.page.scss'],
 })
 export class OnboardingPage implements OnInit {
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
-  config: SwiperOptions = {
-    pagination: {clickable: false},
+  @ViewChild('slides') slides: HTMLIonSlidesElement;
+  config = {
     allowTouchMove: false,
+    pagination: {
+      el: '.swiper-pagination',
+    },
   };
   verificationButtonDisabled = false;
   continueButtonDisabled = false;
   swiperAnimating = false;
   passwordForm: FormGroup;
   usernameForm: FormGroup;
+  firstLastNameForm: FormGroup;
 
   constructor(private authService: AuthService,
               private afAuth: AngularFireAuth,
@@ -48,6 +48,14 @@ export class OnboardingPage implements OnInit {
     return this.usernameForm.get('username');
   }
 
+  get firstName() {
+    return this.firstLastNameForm.get('firstName');
+  }
+
+  get lastName() {
+    return this.firstLastNameForm.get('lastName');
+  }
+
   ngOnInit() {
     this.passwordForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -57,10 +65,15 @@ export class OnboardingPage implements OnInit {
     this.usernameForm = this.formBuilder.group({
       username: ['', [Validators.required]]
     });
+
+    this.firstLastNameForm = this.formBuilder.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]]
+    });
   }
 
   nextSlide() {
-    this.swiper.swiperRef.slideNext();
+    this.slides.slideNext();
   }
 
   async verifyEmail() {
@@ -100,8 +113,25 @@ export class OnboardingPage implements OnInit {
       this.nextSlide();
       this.continueButtonDisabled = false;
     } catch (error) {
-      this.continueButtonDisabled = false;
-      throw new Error(error);
+      if (error.code === AUTH_ERROR_CODES_MAP.credentialTooOldLoginAgain) {
+        const alert = await this.alertController.create({
+          header: 'Sorry',
+          message: 'Please sign in again.',
+          buttons: [{
+            text: 'OK',
+            handler: () => {
+              this.authService.signOut();
+            }
+          }],
+          backdropDismiss: false
+        });
+        await alert.present();
+        this.continueButtonDisabled = false;
+      }
+      else {
+        this.continueButtonDisabled = false;
+        throw new Error(error);
+      }
     }
   }
 
@@ -109,7 +139,7 @@ export class OnboardingPage implements OnInit {
     try {
       this.continueButtonDisabled = true;
       const user = await this.afAuth.currentUser;
-      await user.updateProfile({displayName: this.usernameForm.get('username').value});
+      await user.updateProfile({displayName: this.username.value});
       await this.afStore.doc(`/users/${user.uid}`).set({completedOnboarding: true});
       const alert = await this.alertController.create({
         header: 'Success',
@@ -118,8 +148,24 @@ export class OnboardingPage implements OnInit {
       });
       await alert.present();
       await alert.onDidDismiss();
-      // TODO Bugfix router.navigate does not work
+      // TODO Bugfix: router.navigate does not work
       window.location.href = '/';
+    } catch (error) {
+      this.continueButtonDisabled = false;
+      throw new Error(error);
+    }
+  }
+
+  async setFirstLast() {
+    try {
+      this.continueButtonDisabled = true;
+      const user = await this.afAuth.currentUser;
+      await this.afStore.doc(`/users/${user.uid}`).set({
+        firstName: this.firstName.value,
+        lastName: this.lastName.value
+      });
+      this.nextSlide();
+      this.continueButtonDisabled = false;
     } catch (error) {
       this.continueButtonDisabled = false;
       throw new Error(error);
