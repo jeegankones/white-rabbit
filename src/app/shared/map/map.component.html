@@ -1,7 +1,7 @@
 <google-map height="100%"
             width="100%"
-            [center]="{lat: 44.9695, lng: -93.276}"
-            [zoom]="13"
+            [center]="center"
+            [zoom]="zoom"
             [options]="{clickableIcons: false, disableDefaultUI: true, mapId: '556dce10fd536353', keyboardShortcuts: false}">
   <map-marker *ngFor="let point of mapPoints"
               [id]="point.id"

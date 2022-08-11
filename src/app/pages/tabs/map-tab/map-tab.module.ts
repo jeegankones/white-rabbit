@@ -6,16 +6,17 @@ import { MapTabPage } from './map-tab.page';
 
 import { MapTabPageRoutingModule } from './map-tab-routing.module';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { MapComponent } from './map/map.component';
+import { SharedModule } from '../../../shared/shared.module';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
+    SharedModule,
     FormsModule,
     GoogleMapsModule,
-    MapTabPageRoutingModule
+    MapTabPageRoutingModule,
   ],
-  declarations: [MapTabPage, MapComponent]
+  declarations: [MapTabPage]
 })
 export class MapTabPageModule {}

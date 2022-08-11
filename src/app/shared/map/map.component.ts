@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { LocationService } from '../../../../services/location.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { LocationService } from '../../services/location.service';
 import { Router } from '@angular/router';
+import { MapPoint } from '../interfaces/map-point';
 
 @Component({
   selector: 'wr-map',
@@ -8,6 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
+  @Input() mapPoints: MapPoint[];
+
+  @Input() center: google.maps.LatLngLiteral = {lat: 44.9695, lng: -93.276};
+
+  @Input() zoom = 13;
+
   readonly svgMarker: google.maps.Symbol = {
     path: google.maps.SymbolPath.CIRCLE,
     fillColor: 'white',
@@ -15,18 +22,11 @@ export class MapComponent implements OnInit {
     strokeWeight: 0,
     scale: 30,
   };
-  mapPoints;
 
   constructor(private mapService: LocationService, private router: Router) { }
 
   ngOnInit() {
-    this.mapService.getLocationCollection().subscribe((locations) => {
-      this.mapPoints = locations.map(location => ({
-        id: location.id,
-        location: new google.maps.LatLng(location.coordinates.latitude, location.coordinates.longitude),
-        weight: (location.connectedUsers + 1) * 10,
-      }));
-    });
+
   }
 
   openLocation(location): void {

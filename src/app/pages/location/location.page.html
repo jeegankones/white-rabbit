@@ -3,28 +3,46 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{location.address}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <section class="location__heading ion-padding">
-    <h2 class="ion-no-margin">{{location.code}}</h2>
-    <ion-button (click)="isFavorited = !isFavorited" color="light">
-      <ion-icon *ngIf="!isFavorited" slot="icon-only" name="star-outline"></ion-icon>
-      <ion-icon *ngIf="isFavorited" slot="icon-only" name="star"></ion-icon>
-    </ion-button>
-  </section>
-  <section class="location__body ion-padding-horizontal">
-    <code>Connected users: {{location.connectedUsers}}</code>
-  </section>
-</ion-content>
+<ion-content class="ion-padding">
+  <ion-grid>
+    <!-- Header -->
+    <ion-row>
+      <ion-col>
+        <h2 class="ion-no-margin">{{location.address}}</h2>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button class="d-block mt-0" (click)="isFavorited = !isFavorited" color="light">
+          <ion-icon *ngIf="!isFavorited" slot="icon-only" name="star-outline"></ion-icon>
+          <ion-icon *ngIf="isFavorited" slot="icon-only" name="star"></ion-icon>
+        </ion-button>
+        <ion-button href="https://discord.gg/EfcfAK7dzP">
+          Chat
+          <ion-icon slot="end" name="logo-discord"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
 
-<ion-footer>
-  <ion-toolbar class="ion-text-center">
-    <ion-button class="ion-margin" expand="block">
-      Chat
-      <ion-icon slot="end" name="chatbox"></ion-icon>
-    </ion-button>
-  </ion-toolbar>
-</ion-footer>
+    <!-- Map -->
+    <ion-row class="my-4">
+      <ion-col>
+        <div class="map-container">
+          <wr-map *ngIf="locationService.apiLoaded"
+                  [mapPoints]="mapPoints"
+                  [center]="mapPoints[0].location.toJSON()"
+                  [zoom]="13">
+          </wr-map>
+        </div>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row>
+      <ion-col>
+        <code>Connected users: {{location.connectedUsers}}</code>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
