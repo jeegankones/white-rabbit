@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -10,10 +10,10 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  credentialForm: FormGroup;
+  credentialForm: UntypedFormGroup;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private alertController: AlertController,
     private loadingController: LoadingController,

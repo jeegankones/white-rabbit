@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AlertController } from '@ionic/angular';
-import { FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { AUTH_ERROR_CODES_MAP } from '../../shared/auth-error-codes';
@@ -23,15 +23,15 @@ export class OnboardingPage implements OnInit {
   verificationButtonDisabled = false;
   continueButtonDisabled = false;
   swiperAnimating = false;
-  passwordForm: FormGroup;
-  usernameForm: FormGroup;
-  firstLastNameForm: FormGroup;
+  passwordForm: UntypedFormGroup;
+  usernameForm: UntypedFormGroup;
+  firstLastNameForm: UntypedFormGroup;
 
   constructor(private authService: AuthService,
               private afAuth: AngularFireAuth,
               private afStore: AngularFirestore,
               private router: Router,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private alertController: AlertController) {
   }
 
