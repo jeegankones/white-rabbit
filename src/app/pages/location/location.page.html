@@ -29,8 +29,7 @@
     <ion-row class="my-4">
       <ion-col>
         <div class="map-container">
-          <wr-map *ngIf="locationService.apiLoaded"
-                  [mapPoints]="mapPoints"
+          <wr-map [mapPoints]="mapPoints"
                   [center]="mapPoints[0].location.toJSON()"
                   [zoom]="13">
           </wr-map>

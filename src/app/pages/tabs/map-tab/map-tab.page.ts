@@ -10,7 +10,7 @@ import { MapPoint } from '../../../shared/interfaces/map-point';
 export class MapTabPage implements OnInit {
   mapPoints: MapPoint[];
 
-  constructor(public locationService: LocationService) {
+  constructor(private locationService: LocationService) {
   }
 
   ngOnInit() {

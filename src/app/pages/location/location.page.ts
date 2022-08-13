@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '../../shared/interfaces/location';
 import { MapPoint } from '../../shared/interfaces/map-point';
-import { LocationService } from '../../services/location.service';
 
 @Component({
   selector: 'wr-location',
@@ -15,7 +14,7 @@ export class LocationPage implements OnInit {
   mapPoints: MapPoint[];
   isFavorited = false;
 
-  constructor(private activatedRoute: ActivatedRoute, public locationService: LocationService) { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(data => {
