@@ -140,7 +140,7 @@ export class OnboardingPage implements OnInit {
       this.continueButtonDisabled = true;
       const user = await this.afAuth.currentUser;
       await user.updateProfile({displayName: this.username.value});
-      await this.afStore.doc(`/users/${user.uid}`).set({completedOnboarding: true});
+      await this.afStore.doc(`/users/${user.uid}`).update({displayName: this.username.value, completedOnboarding: true});
       const alert = await this.alertController.create({
         header: 'Success',
         message: `We've saved your information. Welcome to White Rabbit.`,
@@ -160,7 +160,7 @@ export class OnboardingPage implements OnInit {
     try {
       this.continueButtonDisabled = true;
       const user = await this.afAuth.currentUser;
-      await this.afStore.doc(`/users/${user.uid}`).set({
+      await this.afStore.doc(`/users/${user.uid}`).update({
         firstName: this.firstName.value,
         lastName: this.lastName.value
       });

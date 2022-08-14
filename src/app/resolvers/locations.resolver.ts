@@ -8,11 +8,11 @@ import { take } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class LocationResolver implements Resolve<Location> {
+export class LocationsResolver implements Resolve<Location[]> {
   constructor(private locationService: LocationService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Location> {
-    return this.locationService.getLocation(route.paramMap.get('id')).pipe(take(1));
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Location[]> {
+    return this.locationService.getLocationCollection().pipe(take(1));
   }
 }

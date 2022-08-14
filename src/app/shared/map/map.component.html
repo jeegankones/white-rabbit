@@ -1,15 +1,13 @@
 <google-map height="100%"
             width="100%"
-            [center]="center"
-            [zoom]="zoom"
-            [options]="{clickableIcons: false, disableDefaultUI: true, mapId: '556dce10fd536353', keyboardShortcuts: false}">
-  <map-marker *ngFor="let point of mapPoints"
-              [id]="point.id"
-              [position]="point.location"
+            [options]="this.options">
+  <map-marker *ngFor="let location of locations"
+              [id]="location.id"
+              [position]="location.coordinates"
               [options]="{icon: svgMarker}"
-              (mapClick)="openLocation(point)">
+              (mapClick)="openLocation(location)">
   </map-marker>
-  <map-heatmap-layer [data]="mapPoints"
-                     [options]="{radius: 35, maxIntensity: 100}">
+  <map-heatmap-layer [data]="weightedPoints"
+                     [options]="{radius: 30, maxIntensity: 100}">
   </map-heatmap-layer>
 </google-map>

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LocationService } from '../../services/location.service';
 import { Router } from '@angular/router';
-import { MapPoint } from '../interfaces/map-point';
+import { Location } from '../interfaces/location';
 
 @Component({
   selector: 'wr-map',
@@ -9,11 +9,9 @@ import { MapPoint } from '../interfaces/map-point';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  @Input() mapPoints: MapPoint[];
+  @Input() locations: Location[];
 
-  @Input() center: google.maps.LatLngLiteral = {lat: 44.9695, lng: -93.276};
-
-  @Input() zoom = 13;
+  @Input() options?: google.maps.MapOptions;
 
   readonly svgMarker: google.maps.Symbol = {
     path: google.maps.SymbolPath.CIRCLE,
@@ -23,13 +21,26 @@ export class MapComponent implements OnInit {
     scale: 30,
   };
 
+  readonly defaultOptions: google.maps.MapOptions = {
+    clickableIcons: false,
+    disableDefaultUI: true,
+    mapId: '556dce10fd536353',
+    keyboardShortcuts: false
+  };
+
+  weightedPoints: google.maps.visualization.WeightedLocation[];
+
   constructor(private mapService: LocationService, private router: Router) { }
 
   ngOnInit() {
-
+    this.options = this.options === undefined ? this.defaultOptions : {...this.defaultOptions, ...this.options};
+    this.weightedPoints = this.locations.map(location => ({
+        location: new google.maps.LatLng(location.coordinates),
+        weight: (location.connectedUsers+1)*10
+      }));
   }
 
-  openLocation(location): void {
+  openLocation(location: Location): void {
     this.router.navigate(['tab', 'map', 'location', location.id]);
   }
 

@@ -11,12 +11,13 @@
     <!-- Header -->
     <ion-row>
       <ion-col>
-        <h2 class="ion-no-margin">{{location.address}}</h2>
+        <h2 class="mt-0">{{location.address}}</h2>
+        <code class="m-0">Connected users: {{location.connectedUsers}}</code>
       </ion-col>
       <ion-col size="auto">
-        <ion-button class="d-block mt-0" (click)="isFavorited = !isFavorited" color="light">
-          <ion-icon *ngIf="!isFavorited" slot="icon-only" name="star-outline"></ion-icon>
-          <ion-icon *ngIf="isFavorited" slot="icon-only" name="star"></ion-icon>
+        <ion-button class="d-block mt-0" (click)="setFavorite()" [disabled]="isFavoriteLoading" color="light">
+          <ion-icon *ngIf="!isFavorite" slot="icon-only" name="star-outline"></ion-icon>
+          <ion-icon *ngIf="isFavorite" slot="icon-only" name="star"></ion-icon>
         </ion-button>
         <ion-button href="https://discord.gg/EfcfAK7dzP">
           Chat
@@ -29,9 +30,7 @@
     <ion-row class="my-4">
       <ion-col>
         <div class="map-container">
-          <wr-map [mapPoints]="mapPoints"
-                  [center]="mapPoints[0].location.toJSON()"
-                  [zoom]="13">
+          <wr-map [locations]="[location]" [options]="mapConfig">
           </wr-map>
         </div>
       </ion-col>
@@ -40,7 +39,8 @@
 
     <ion-row>
       <ion-col>
-        <code>Connected users: {{location.connectedUsers}}</code>
+        <h3 class="h2 mt-0">Access code</h3>
+        <p class="access-code">{{location.code}}</p>
       </ion-col>
     </ion-row>
   </ion-grid>

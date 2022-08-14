@@ -1,26 +1,49 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationService } from '../../../services/location.service';
-import { MapPoint } from '../../../shared/interfaces/map-point';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '../../../shared/interfaces/location';
+import { DocumentSnapshot } from '@angular/fire/compat/firestore';
+import { User } from '../../../shared/interfaces/user';
+import { ViewWillEnter } from '@ionic/angular';
 
 @Component({
   selector: 'wr-map-page',
   templateUrl: 'map-tab.page.html',
   styleUrls: ['map-tab.page.scss']
 })
-export class MapTabPage implements OnInit {
-  mapPoints: MapPoint[];
+export class MapTabPage implements OnInit, ViewWillEnter {
+  readonly defaultOptions: google.maps.MapOptions = {
+    center: {lat: 44.9695, lng: -93.276},
+    zoom: 13
+  };
 
-  constructor(private locationService: LocationService) {
+  locations: Location[];
+  mapConfig: google.maps.MapOptions;
+  userDoc: DocumentSnapshot<User>;
+  options = this.defaultOptions;
+
+  constructor(private locationService: LocationService, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.locationService.getLocationCollection().subscribe((locations) => {
-      this.mapPoints = locations.map(location => ({
-        id: location.id,
-        location: new google.maps.LatLng(location.coordinates),
-        weight: (location.connectedUsers + 1) * 10,
-      }));
+    this.activatedRoute.data.subscribe(data => {
+      this.locations = data.locations;
+      this.userDoc = data.user;
     });
+  }
+
+  ionViewWillEnter() {
+    this.checkFavoriteStatus();
+  }
+
+  checkFavoriteStatus() {
+    const favoriteLocationId = this.userDoc.get('favoriteLocationId');
+    if (favoriteLocationId) {
+      const favLocation = this.locations.filter((location) => location.id === favoriteLocationId).pop();
+      this.options = {...this.defaultOptions, center: favLocation.coordinates};
+    } else {
+      this.options = this.defaultOptions;
+    }
   }
 
 }
