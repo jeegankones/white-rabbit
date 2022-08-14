@@ -3,11 +3,11 @@ import { LoadingController } from '@ionic/angular';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
-  selector: 'wr-tab3',
-  templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss']
+  selector: 'wr-account-tab',
+  templateUrl: 'account-tab.page.html',
+  styleUrls: ['account-tab.page.scss']
 })
-export class Tab3Page {
+export class AccountTabPage {
 
   constructor(private loadingController: LoadingController,
               private authService: AuthService) {}
