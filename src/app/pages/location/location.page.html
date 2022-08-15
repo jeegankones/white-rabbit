@@ -12,7 +12,7 @@
     <ion-row>
       <ion-col>
         <h2 class="mt-0">{{location.address}}</h2>
-        <code class="m-0">Connected users: {{location.connectedUsers}}</code>
+        <p class="m-0 font-monospace">Connected users: {{location.connectedUsers}}</p>
       </ion-col>
       <ion-col size="auto">
         <ion-button class="d-block mt-0" (click)="setFavorite()" [disabled]="isFavoriteLoading" color="light">

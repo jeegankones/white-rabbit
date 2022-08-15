@@ -1,12 +1,5 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Account
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding">
-  <ion-button (click)="signOut()" expand="block" color="dark">Sign out</ion-button>
-
+  <h1 class="mt-1">{{userData.displayName}}</h1>
+  <p class="font-monospace">Member since {{userData.created | date}}</p>
+  <ion-button class="" (click)="signOut()" color="primary">Sign out</ion-button>
 </ion-content>
