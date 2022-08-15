@@ -11,7 +11,7 @@
     <!-- Header -->
     <ion-row>
       <ion-col>
-        <h2 class="mt-0">{{location.address}}</h2>
+        <h1 class="mt-0">{{location.address}}</h1>
         <p class="m-0 font-monospace">Connected users: {{location.connectedUsers}}</p>
       </ion-col>
       <ion-col size="auto">
@@ -39,8 +39,19 @@
 
     <ion-row>
       <ion-col>
-        <h3 class="h2 mt-0">Access code</h3>
+        <h2 class="mt-0">Access code</h2>
         <p class="access-code">{{location.code}}</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <h2 class="m-0">Events</h2>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button fill="clear">
+          <ion-icon slot="icon-only" name="add"></ion-icon>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
