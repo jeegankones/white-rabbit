@@ -26,6 +26,7 @@ export class OnboardingPage implements OnInit {
   passwordForm: UntypedFormGroup;
   usernameForm: UntypedFormGroup;
   firstLastNameForm: UntypedFormGroup;
+  currentUser: firebase.default.User;
 
   constructor(private authService: AuthService,
               private afAuth: AngularFireAuth,
@@ -56,7 +57,7 @@ export class OnboardingPage implements OnInit {
     return this.firstLastNameForm.get('lastName');
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.passwordForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirm: ['']
@@ -70,6 +71,13 @@ export class OnboardingPage implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]]
     });
+
+    this.currentUser = await this.afAuth.currentUser;
+    if (this.currentUser.emailVerified) {
+      this.nextSlide();
+    } else {
+      this.currentUser.sendEmailVerification();
+    }
   }
 
   nextSlide() {
@@ -78,8 +86,8 @@ export class OnboardingPage implements OnInit {
 
   async verifyEmail() {
     this.continueButtonDisabled = true;
-    const user = await this.afAuth.currentUser;
-    if (user.emailVerified) {
+    await this.currentUser.reload();
+    if (this.currentUser.emailVerified) {
       this.nextSlide();
       this.continueButtonDisabled = false;
       return;
@@ -96,8 +104,7 @@ export class OnboardingPage implements OnInit {
   async sendVerificationEmail() {
     try {
       this.verificationButtonDisabled = true;
-      const user = await this.afAuth.currentUser;
-      await user.sendEmailVerification();
+      await this.currentUser.sendEmailVerification();
       this.verificationButtonDisabled = false;
     } catch (error) {
       this.verificationButtonDisabled = false;
@@ -108,8 +115,7 @@ export class OnboardingPage implements OnInit {
   async setNewPassword() {
     try {
       this.continueButtonDisabled = true;
-      const user = await this.afAuth.currentUser;
-      await user.updatePassword(this.passwordForm.get('confirm').value);
+      await this.currentUser.updatePassword(this.passwordForm.get('confirm').value);
       this.nextSlide();
       this.continueButtonDisabled = false;
     } catch (error) {
@@ -138,9 +144,8 @@ export class OnboardingPage implements OnInit {
   async setUsername() {
     try {
       this.continueButtonDisabled = true;
-      const user = await this.afAuth.currentUser;
-      await user.updateProfile({displayName: this.username.value});
-      await this.afStore.doc(`/users/${user.uid}`).update({displayName: this.username.value, completedOnboarding: true});
+      await this.currentUser.updateProfile({displayName: this.username.value});
+      await this.afStore.doc(`/users/${this.currentUser.uid}`).update({displayName: this.username.value, completedOnboarding: true});
       const alert = await this.alertController.create({
         header: 'Success',
         message: `We've saved your information. Welcome to White Rabbit.`,
@@ -159,8 +164,7 @@ export class OnboardingPage implements OnInit {
   async setFirstLast() {
     try {
       this.continueButtonDisabled = true;
-      const user = await this.afAuth.currentUser;
-      await this.afStore.doc(`/users/${user.uid}`).update({
+      await this.afStore.doc(`/users/${this.currentUser.uid}`).set({
         firstName: this.firstName.value,
         lastName: this.lastName.value
       });

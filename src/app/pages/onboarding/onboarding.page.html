@@ -15,7 +15,7 @@
                     [disabled]="verificationButtonDisabled"
                     expand="block"
                     (click)="sendVerificationEmail()">
-          Send verification email
+          Resend verification email
         </ion-button>
         <ion-button expand="block"
                     [disabled]="continueButtonDisabled || swiperAnimating"
@@ -72,7 +72,7 @@
 
         <form [formGroup]="firstLastNameForm" (ngSubmit)="setFirstLast()">
           <div class="mb-1 ion-text-left">
-            <ion-item class="ion-no-padding">
+            <ion-item>
               <ion-label position="floating">First name</ion-label>
               <ion-input formControlName="firstName">
               </ion-input>
@@ -83,7 +83,7 @@
           </div>
 
           <div class="mb-3 ion-text-left">
-            <ion-item class="ion-no-padding">
+            <ion-item>
               <ion-label position="floating">Last name</ion-label>
               <ion-input formControlName="lastName">
               </ion-input>
@@ -108,7 +108,7 @@
 
         <form [formGroup]="usernameForm" (ngSubmit)="setUsername()">
           <div class="mb-3 ion-text-left">
-            <ion-item class="ion-no-padding">
+            <ion-item>
               <ion-label position="floating">Screen name</ion-label>
               <ion-input formControlName="username">
               </ion-input>

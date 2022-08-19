@@ -43,7 +43,6 @@ const initializeGoogleMapApiFactory = (httpClient: HttpClient): () => Observable
       storageBucket: environment.ANGULAR_FIREBASE_STORAGE_BUCKET,
       messagingSenderId: environment.ANGULAR_FIREBASE_MESSAGING_SENDER_ID,
       appId: environment.ANGULAR_FIREBASE_APP_ID,
-      measurementId: environment.ANGULAR_FIREBASE_MEASUREMENT_ID
     }),
     AngularFireAuthModule,
     AngularFirestoreModule
