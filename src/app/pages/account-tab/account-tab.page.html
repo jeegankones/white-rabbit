@@ -1,0 +1,6 @@
+<ion-content class="ion-padding">
+  <p class="mb-1">Welcome,</p>
+  <h1 class="mt-0 mb-3">{{userData.displayName}}</h1>
+  <p class="text-muted">Member since {{userData.created | date}}</p>
+  <ion-button class="" (click)="signOut()" color="primary">Sign out</ion-button>
+</ion-content>

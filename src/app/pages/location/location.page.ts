@@ -4,6 +4,7 @@ import { Location } from '../../shared/interfaces/location';
 import { AngularFirestore, DocumentSnapshot } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { User } from '../../shared/interfaces/user';
+import { Event } from './event';
 
 @Component({
   selector: 'wr-location',
@@ -16,6 +17,7 @@ export class LocationPage implements OnInit {
   isFavoriteLoading = false;
   mapConfig: google.maps.MapOptions;
   userDoc: DocumentSnapshot<User>;
+  events: {date: Date; title: string; description: string}[];
 
   constructor(private activatedRoute: ActivatedRoute, private afAuth: AngularFireAuth, private afStore: AngularFirestore) { }
 
@@ -29,6 +31,10 @@ export class LocationPage implements OnInit {
         gestureHandling: 'none'
       };
       this.isFavorite = this.userDoc.get('favoriteLocationId') === this.location.id;
+      this.afStore.collection<Event>(`/locations/${this.location.id}/events`).get()
+        .subscribe((eventsQuery) => {
+          this.events = eventsQuery.docs.map((eventDoc) => ({...eventDoc.data(), date: eventDoc.data().date.toDate()}));
+        });
     });
   }
 

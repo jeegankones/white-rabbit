@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationService } from '../../../services/location.service';
+import { LocationService } from '../../services/location.service';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '../../../shared/interfaces/location';
+import { Location } from '../../shared/interfaces/location';
 import { DocumentSnapshot } from '@angular/fire/compat/firestore';
-import { User } from '../../../shared/interfaces/user';
+import { User } from '../../shared/interfaces/user';
 import { ViewWillEnter } from '@ionic/angular';
 
 @Component({

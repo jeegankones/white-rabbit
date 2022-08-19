@@ -11,7 +11,7 @@
 /* Bootstrap utilities */
 @import "~bootstrap/dist/css/bootstrap-reboot.css";
 @import "~bootstrap/dist/css/bootstrap-utilities.css";
-
+@import "~src/assets/scss/bootstrap-overrides";
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
 

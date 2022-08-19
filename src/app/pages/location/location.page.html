@@ -11,7 +11,9 @@
     <!-- Header -->
     <ion-row>
       <ion-col>
-        <h1 class="mt-0">{{location.address}}</h1>
+        <p class="mb-1">Location:</p>
+        <h1 class="mt-0 mb-3">{{location.name}}</h1>
+        <p class="text-muted">{{location.address}}</p>
         <p class="m-0 font-monospace">Connected users: {{location.connectedUsers}}</p>
       </ion-col>
       <ion-col size="auto">
@@ -19,7 +21,7 @@
           <ion-icon *ngIf="!isFavorite" slot="icon-only" name="star-outline"></ion-icon>
           <ion-icon *ngIf="isFavorite" slot="icon-only" name="star"></ion-icon>
         </ion-button>
-        <ion-button href="https://discord.gg/EfcfAK7dzP">
+        <ion-button href="https://discord.gg/MhfRJ6rDkn" target="_blank">
           Chat
           <ion-icon slot="end" name="logo-discord"></ion-icon>
         </ion-button>
@@ -44,14 +46,21 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-align-items-center">
+    <ion-row>
       <ion-col>
-        <h2 class="m-0">Events</h2>
-      </ion-col>
-      <ion-col size="auto">
-        <ion-button fill="clear">
-          <ion-icon slot="icon-only" name="add"></ion-icon>
-        </ion-button>
+        <h2>Events</h2>
+
+        <ng-container *ngIf="events">
+          <ion-card *ngFor="let event of events" class="m-0 mb-3">
+            <ion-card-header>
+              <ion-card-subtitle>{{event.date | date: 'MMM d, y, h:mm a'}}</ion-card-subtitle>
+              <ion-card-title>{{event.title}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{event.description}}
+            </ion-card-content>
+          </ion-card>
+        </ng-container>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -1,11 +1,14 @@
-<ion-content [fullscreen]="true" class="login ion-padding">
+<ion-content fullscreen="true" scroll-y="false" class="ion-padding">
   <form [formGroup]="credentialForm"
         (keydown.enter)="enterKeyPress()"
         (ngSubmit)="signIn()">
     <ion-grid>
       <ion-row>
         <ion-col>
-          <h1 class="mt-0 mb-5 ion-text-center">White Rabbit</h1>
+          <div class="text-center">
+            <ion-icon src="/assets/icon/white-rabbit.svg"></ion-icon>
+            <h1 class="mb-4 ion-text-center">White Rabbit</h1>
+          </div>
 
           <!-- Form -->
           <div class="mb-1">

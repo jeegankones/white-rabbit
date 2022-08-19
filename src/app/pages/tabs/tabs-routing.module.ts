@@ -17,7 +17,7 @@ const routes: Routes = [
     children: [
       {
         path: 'map',
-        loadChildren: () => import('./map-tab/map-tab.module').then(m => m.MapTabPageModule),
+        loadChildren: () => import('../map-tab/map-tab.module').then(m => m.MapTabPageModule),
       },
       {
         path: 'map/location/:id',
@@ -25,7 +25,7 @@ const routes: Routes = [
       },
       {
         path: 'account',
-        loadChildren: () => import('./account-tab/account-tab.module').then(m => m.AccountTabPageModule)
+        loadChildren: () => import('../account-tab/account-tab.module').then(m => m.AccountTabPageModule)
       }
     ]
   },

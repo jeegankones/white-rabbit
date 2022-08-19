@@ -6,7 +6,7 @@ import { MapTabPage } from './map-tab.page';
 
 import { MapTabPageRoutingModule } from './map-tab-routing.module';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { SharedModule } from '../../../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [

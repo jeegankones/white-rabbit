@@ -9,12 +9,12 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { GlobalErrorHandler } from './shared/error/error-handler';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 const initializeGoogleMapApiFactory = (httpClient: HttpClient): () => Observable<boolean> => () => httpClient.jsonp(`https://maps.googleapis.com/maps/api/js?key=${environment.ANGULAR_GOOGLE_MAPS_API_KEY}&libraries=visualization`, 'callback')
   .pipe(

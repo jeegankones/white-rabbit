@@ -1,0 +1,19 @@
+ion-toolbar {
+  --background: var(--ion-background-color);
+  --opacity: 0.8;
+}
+
+.md ion-toolbar {
+  text-align: center;
+}
+
+ion-header {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+ion-title > * {
+  vertical-align: middle;
+  display: inline-block;
+}
