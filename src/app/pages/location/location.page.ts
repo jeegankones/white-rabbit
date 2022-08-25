@@ -33,7 +33,9 @@ export class LocationPage implements OnInit {
       this.isFavorite = this.userDoc.get('favoriteLocationId') === this.location.id;
       this.afStore.collection<Event>(`/locations/${this.location.id}/events`).get()
         .subscribe((eventsQuery) => {
-          this.events = eventsQuery.docs.map((eventDoc) => ({...eventDoc.data(), date: eventDoc.data().date.toDate()}));
+          this.events = eventsQuery.docs
+            .sort((a, b) => a.data().date.toMillis() - b.data().date.toMillis())
+            .map((eventDoc) => ({...eventDoc.data(), date: eventDoc.data().date.toDate()}));
         });
     });
   }

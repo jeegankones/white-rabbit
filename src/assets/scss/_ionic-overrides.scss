@@ -1,3 +1,10 @@
+* {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
 .ios ion-item {
   --padding-start: 0;
 }
