@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '../../shared/interfaces/location';
 import { AngularFirestore, DocumentSnapshot } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { User } from '../../shared/interfaces/user';
 import { Event } from './event';
+import { LocationService } from '../../services/location.service';
 
 @Component({
   selector: 'wr-location',
   templateUrl: './location.page.html',
   styleUrls: ['./location.page.scss'],
 })
-export class LocationPage implements OnInit {
+export class LocationPage implements OnInit, AfterViewInit {
   location: Location;
   isFavorite = false;
   isFavoriteLoading = false;
@@ -19,7 +20,7 @@ export class LocationPage implements OnInit {
   userDoc: DocumentSnapshot<User>;
   events: {date: Date; title: string; description: string}[];
 
-  constructor(private activatedRoute: ActivatedRoute, private afAuth: AngularFireAuth, private afStore: AngularFirestore) { }
+  constructor(private activatedRoute: ActivatedRoute, private afAuth: AngularFireAuth, private afStore: AngularFirestore, private locationService: LocationService) { }
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(data => {
@@ -37,6 +38,12 @@ export class LocationPage implements OnInit {
             .sort((a, b) => a.data().date.toMillis() - b.data().date.toMillis())
             .map((eventDoc) => ({...eventDoc.data(), date: eventDoc.data().date.toDate()}));
         });
+    });
+  }
+
+  ngAfterViewInit() {
+    this.locationService.getLocation(`${this.location.id}`).subscribe(location => {
+      this.location = location;
     });
   }
 
