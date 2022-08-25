@@ -14,7 +14,7 @@
         <p class="mb-1">Location:</p>
         <h1 class="mt-0 mb-3">{{location.name}}</h1>
         <p class="text-muted">{{location.address}}</p>
-        <p class="m-0 font-monospace">Connected users: {{location.connectedUsers}}</p>
+        <p class="font-monospace mb-0">Connected users: {{location.connectedUsers}}</p>
       </ion-col>
       <ion-col size="auto">
         <ion-button class="d-block mt-0" (click)="setFavorite()" [disabled]="isFavoriteLoading" color="light">
@@ -28,21 +28,10 @@
       </ion-col>
     </ion-row>
 
-    <!-- Map -->
-    <ion-row class="my-4">
-      <ion-col>
-        <div class="map-container">
-          <wr-map [locations]="[location]" [options]="mapConfig">
-          </wr-map>
-        </div>
-      </ion-col>
-    </ion-row>
-
-
     <ion-row>
       <ion-col>
-        <h2 class="mt-0">Access code</h2>
-        <p class="access-code">{{location.code}}</p>
+        <h2>Access code</h2>
+        <p class="access-code mb-0">{{location.code}}</p>
       </ion-col>
     </ion-row>
 
