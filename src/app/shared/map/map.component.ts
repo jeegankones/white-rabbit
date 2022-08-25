@@ -28,16 +28,17 @@ export class MapComponent implements OnInit {
     keyboardShortcuts: false
   };
 
-  weightedPoints: google.maps.visualization.WeightedLocation[];
-
   constructor(private mapService: LocationService, private router: Router) { }
+
+  get weightedPoints(): google.maps.visualization.WeightedLocation[] {
+    return this.locations.map(location => ({
+      location: new google.maps.LatLng(location.coordinates),
+      weight: (location.connectedUsers+1)*10
+    }));
+  }
 
   ngOnInit() {
     this.options = this.options === undefined ? this.defaultOptions : {...this.defaultOptions, ...this.options};
-    this.weightedPoints = this.locations.map(location => ({
-        location: new google.maps.LatLng(location.coordinates),
-        weight: (location.connectedUsers+1)*10
-      }));
   }
 
   openLocation(location: Location): void {

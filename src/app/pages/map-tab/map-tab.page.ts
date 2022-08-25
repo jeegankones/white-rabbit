@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { LocationService } from '../../services/location.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '../../shared/interfaces/location';
@@ -11,7 +11,7 @@ import { ViewWillEnter } from '@ionic/angular';
   templateUrl: 'map-tab.page.html',
   styleUrls: ['map-tab.page.scss']
 })
-export class MapTabPage implements OnInit, ViewWillEnter {
+export class MapTabPage implements OnInit, ViewWillEnter, AfterViewInit {
   readonly defaultOptions: google.maps.MapOptions = {
     center: {lat: 44.9695, lng: -93.276},
     zoom: 13
@@ -29,6 +29,12 @@ export class MapTabPage implements OnInit, ViewWillEnter {
     this.activatedRoute.data.subscribe(data => {
       this.locations = data.locations;
       this.userDoc = data.user;
+    });
+  }
+
+  ngAfterViewInit() {
+    this.locationService.getLocationCollection().subscribe((locations) => {
+      this.locations = locations;
     });
   }
 
