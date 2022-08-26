@@ -6,3 +6,12 @@ ANGULAR_FIREBASE_STORAGE_BUCKET= "white-rabbit-dev.appspot.com"
 ANGULAR_FIREBASE_MESSAGING_SENDER_ID= "909829576199"
 ANGULAR_FIREBASE_APP_ID= "1:909829576199:web:ff76c70601b675c2e0bca2"
 ANGULAR_GOOGLE_MAPS_API_KEY= "AIzaSyA25_4wdIbQddm3Yxj7nhnsQgg1VSyCHyI"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    cache-control = '''
+    max-age=0,
+    no-cache,
+    no-store,
+    must-revalidate'''
