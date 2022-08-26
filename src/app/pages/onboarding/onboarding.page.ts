@@ -115,6 +115,7 @@ export class OnboardingPage implements OnInit {
   async setNewPassword() {
     try {
       this.continueButtonDisabled = true;
+      await this.currentUser.reload();
       await this.currentUser.updatePassword(this.passwordForm.get('confirm').value);
       this.nextSlide();
       this.continueButtonDisabled = false;

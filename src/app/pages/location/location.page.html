@@ -42,7 +42,7 @@
         <ng-container *ngIf="events">
           <ion-card *ngFor="let event of events" class="m-0 mb-3">
             <ion-card-header>
-              <ion-card-subtitle>{{event.date | date: 'MMM d, y, h:mm a'}}</ion-card-subtitle>
+              <ion-card-subtitle>{{event.date | date: 'E MMM d, h:mm a'}}</ion-card-subtitle>
               <ion-card-title>{{event.title}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
