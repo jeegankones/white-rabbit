@@ -6,6 +6,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { User } from '../../shared/interfaces/user';
 import { Event } from './event';
 import { LocationService } from '../../services/location.service';
+import { Timestamp } from '@firebase/firestore';
+import subHours from 'date-fns/subHours';
 
 @Component({
   selector: 'wr-location',
@@ -32,7 +34,11 @@ export class LocationPage implements OnInit, AfterViewInit {
         gestureHandling: 'none'
       };
       this.isFavorite = this.userDoc.get('favoriteLocationId') === this.location.id;
-      this.afStore.collection<Event>(`/locations/${this.location.id}/events`).get()
+
+      // Get all events no older than 4 hours
+      const fourHoursAgo = Timestamp.fromDate(subHours(new Date(), 4));
+      this.afStore.collection<Event>(`/locations/${this.location.id}/events`, ref => ref.where('date', '>', fourHoursAgo))
+        .get()
         .subscribe((eventsQuery) => {
           this.events = eventsQuery.docs
             .sort((a, b) => a.data().date.toMillis() - b.data().date.toMillis())
