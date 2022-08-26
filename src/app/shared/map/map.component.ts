@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { LocationService } from '../../services/location.service';
 import { Router } from '@angular/router';
 import { Location } from '../interfaces/location';
@@ -7,6 +7,7 @@ import { Location } from '../interfaces/location';
   selector: 'wr-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapComponent implements OnInit {
   @Input() locations: Location[];
