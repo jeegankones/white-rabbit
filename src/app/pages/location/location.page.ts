@@ -8,6 +8,7 @@ import { Event } from './event';
 import { LocationService } from '../../services/location.service';
 import { Timestamp } from '@firebase/firestore';
 import subHours from 'date-fns/subHours';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'wr-location',
@@ -22,7 +23,13 @@ export class LocationPage implements OnInit, AfterViewInit {
   userDoc: DocumentSnapshot<User>;
   events: {date: Date; title: string; description: string}[];
 
-  constructor(private activatedRoute: ActivatedRoute, private afAuth: AngularFireAuth, private afStore: AngularFirestore, private locationService: LocationService) { }
+  constructor(private activatedRoute: ActivatedRoute,
+              private alertController: AlertController,
+              private toastController: ToastController,
+              private afAuth: AngularFireAuth,
+              private afStore: AngularFirestore,
+              private locationService: LocationService){
+  }
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(data => {
@@ -61,6 +68,44 @@ export class LocationPage implements OnInit, AfterViewInit {
     });
     this.isFavorite = !this.isFavorite;
     this.isFavoriteLoading = false;
+  }
+
+  async handleIssueClick() {
+    const user = await this.afAuth.currentUser;
+    const alert = await this.alertController.create({
+      header: 'Problem at this location?',
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+      },
+        {
+          text: 'Submit',
+          handler: (alertData) => {
+            this.afStore.collection(`/locations/${this.location.id}/issues`).add({
+              reportedDate: Timestamp.now(),
+              resolved: false,
+              description: alertData.issue,
+              userId: user.uid
+            }).then(async () => {
+              const toast = await this.toastController.create({
+                header: 'Issue submitted successfully',
+                duration: 4000,
+              });
+              await toast.present();
+            });
+          }
+        }],
+      inputs: [
+        {
+          name: 'issue',
+          type: 'textarea',
+          placeholder: `Please describe what's wrong`,
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
 }

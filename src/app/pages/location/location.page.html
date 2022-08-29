@@ -3,6 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="handleIssueClick()" target="_blank">
+        <ion-icon slot="icon-only" name="alert-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -17,11 +22,11 @@
         <p class="font-monospace mb-0">Connected users: {{location.connectedUsers}}</p>
       </ion-col>
       <ion-col size="auto">
-        <ion-button class="d-block mt-0" (click)="setFavorite()" [disabled]="isFavoriteLoading" color="light">
+        <ion-button expand="block" class="mt-0" (click)="setFavorite()" [disabled]="isFavoriteLoading" color="light">
           <ion-icon *ngIf="!isFavorite" slot="icon-only" name="star-outline"></ion-icon>
           <ion-icon *ngIf="isFavorite" slot="icon-only" name="star"></ion-icon>
         </ion-button>
-        <ion-button href="https://discord.gg/MhfRJ6rDkn" target="_blank">
+        <ion-button expand="block" href="https://discord.gg/MhfRJ6rDkn" target="_blank">
           Chat
           <ion-icon slot="end" name="logo-discord"></ion-icon>
         </ion-button>
@@ -37,9 +42,8 @@
 
     <ion-row>
       <ion-col>
+        <ng-container *ngIf="events?.length > 0">
         <h2>Events</h2>
-
-        <ng-container *ngIf="events">
           <ion-card *ngFor="let event of events" class="m-0 mb-3">
             <ion-card-header>
               <ion-card-subtitle>{{event.date | date: 'E MMM d, h:mm a'}}</ion-card-subtitle>
